@@ -61,64 +61,6 @@ Cross-Validation-Based Evaluation
 
 The model is evaluated using stratified 5-fold cross-validation and multiple classification metrics.
 
-Architecture
-
-The overall pipeline is:
-
-Input RGB Image
-      │
-      ▼
-Resize to 256 × 256
-      │
-      ▼
-Learnable Spatial-Frequency Augmentation
-      │
-      ├──────── Spatial Image
-      │              × α_image
-      │
-      └──────── FFT Magnitude
-                     × α_frequency
-                          │
-                          ▼
-                 300 × 300 Tensor
-                          │
-                          ▼
-              Pretrained ConvNeXt-Tiny
-                          │
-                          ▼
-                      Pre-Gate
-                          │
-                          ▼
-                   Feature Map
-                          │
-          ┌───────────────┼───────────────┐
-          │               │               │
-          ▼               ▼               ▼               ▼
-      Branch 1        Branch 2        Branch 3        Branch 4
-        CNN          Depthwise CNN    Transformer     Multi-Scale
-                                                     Transformer
-          │               │               │               │
-          └───────────────┴───────┬───────┴───────────────┘
-                                  │
-                                  ▼
-                               Router
-                                  │
-                               Softmax
-                                  │
-                                  ▼
-                           Top-2 Selection
-                                  │
-                                  ▼
-                         Sparse Weighting
-                                  │
-                                  ▼
-                         Weighted Fusion
-                                  │
-                                  ▼
-                              Classifier
-                                  │
-                                  ▼
-                         Predicted Class
 Learnable Spatial-Frequency Augmentation
 
 The original input image has size:
@@ -536,20 +478,7 @@ Average branch usage plots
 Branch-usage-per-class heatmaps
 Spatial/frequency weight evolution plots
 
-Example figures can be stored inside:
 
-figures/
-
-Recommended structure:
-
-figures/
-├── architecture.png
-├── confusion_matrix.png
-├── roc_curve.png
-├── branch_usage.png
-├── branch_usage_heatmap.png
-└── spatial_frequency_weights.png
-Results
 
 The model stores metrics for every training epoch and identifies the best-performing model for each cross-validation fold.
 
@@ -635,26 +564,7 @@ StratifiedKFold(
 
 For stronger reproducibility, deterministic PyTorch and NumPy seeds can additionally be configured before training.
 
-Repository Structure
-AHCTNet-Liver-Fibrosis/
-│
-├── README.md
-├── LICENSE
-├── requirements.txt
-├── .gitignore
-│
-├── notebooks/
-    ├── ahctnet_5fold.ipynb
-│
-├── figures/
-│   ├── architecture.png
-│  
-└── training_outputs/
-    ├── fold_1/
-    ├── fold_2/
-    ├── fold_3/
-    ├── fold_4/
-    └── fold_5/
+
 
 Future Work
 
