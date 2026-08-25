@@ -482,17 +482,39 @@ Spatial/frequency weight evolution plots
 
 The model stores metrics for every training epoch and identifies the best-performing model for each cross-validation fold.
 
-A recommended summary format is:
+## Experimental Results
 
-Metric	Mean ± Std
-Accuracy	To be added
-Precision	To be added
-Recall	To be added
-F1 Score	To be added
-Balanced Accuracy	To be added
-MCC	To be added
-Cohen's Kappa	To be added
-ROC-AUC	To be added
+The following results are reported as the mean ± standard deviation across the five validation folds of the stratified 5-fold cross-validation procedure.
+
+| Metric | Mean ± Std |
+|---|---:|
+| Accuracy | **99.21% ± 0.21%** |
+| Weighted Precision | **99.22% ± 0.21%** |
+| Weighted Recall | **99.21% ± 0.21%** |
+| Weighted F1 Score | **99.21% ± 0.21%** |
+| Balanced Accuracy | **98.81% ± 0.33%** |
+| Matthews Correlation Coefficient (MCC) | **98.97%** |
+
+> **Note:** These results represent validation performance aggregated across 5-fold stratified cross-validation and are not results from an independent external test set.
+
+### Learned Spatial-Frequency Fusion
+
+The learnable spatial-frequency module converged to an approximately balanced contribution between spatial and frequency-domain information.
+
+| Fusion Weight | Mean | Std |
+|---|---:|---:|
+| α_frequency | 0.4895 | 0.0004 |
+| α_image | ≈ 0.5105 | ≈ 0.0004 |
+
+Since:
+
+$$
+\alpha_{\text{image}} + \alpha_{\text{frequency}} = 1
+$$
+
+the learned fusion corresponds to approximately **51.05% spatial information** and **48.95% frequency-domain information**.
+
+This near-balanced weighting suggests that both spatial and FFT-derived frequency representations contribute substantially to the final classification.
 
 Final numerical results should be reported using the mean and standard deviation across all five validation folds.
 
